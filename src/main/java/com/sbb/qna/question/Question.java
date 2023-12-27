@@ -1,4 +1,4 @@
-package com.sbb.qna;
+package com.sbb.qna.question;
 
 import jakarta.persistence.*;
 import lombok.Getter;
