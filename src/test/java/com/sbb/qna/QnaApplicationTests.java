@@ -23,6 +23,14 @@ class QnaApplicationTests {
     AnswerRepository answerRepository;
 
     @Test
+    void createQ() {
+        Question question = new Question();
+        question.setContent("내용1");
+        question.setSubject("제목1");
+        question.setCreatedDate(LocalDateTime.now());
+        this.questionRepository.save(question);
+    }
+    @Test
     void testA01() {
         Optional<Question> optionalQuestion = this.questionRepository.findById(2);
         assertTrue(optionalQuestion.isPresent());
