@@ -2,16 +2,16 @@ package com.sbb.qna.question;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 @RequestMapping("/question")
 @Controller
 @RequiredArgsConstructor
+@ToString
 public class QuestionController {
     private final QuestionService questionService;
 
@@ -29,6 +29,16 @@ public class QuestionController {
 
         model.addAttribute("question",question);
         return "question_detail";
+    }
+
+    @GetMapping("/create")
+    public String create() {
+        return "question_create";
+    }
+    @PostMapping("/create")
+    public String create(@RequestParam("subject") String subject, @RequestParam("content") String content) {
+        this.questionService.create(subject, content);
+        return  String.format("redirect:/");
     }
 
 }
