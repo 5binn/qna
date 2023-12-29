@@ -1,9 +1,12 @@
 package com.sbb.qna.question;
 
 
+import com.sbb.qna.answer.AnswerForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -24,7 +27,7 @@ public class QuestionController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Integer id, Model model) {
+    public String detail(@PathVariable("id") Integer id, Model model, AnswerForm answerForm) {
         Question question = this.questionService.getQuestion(id);
 
         model.addAttribute("question",question);
@@ -32,13 +35,16 @@ public class QuestionController {
     }
 
     @GetMapping("/create")
-    public String create() {
+    public String create(QuestionForm questionForm) {
         return "question_create";
     }
     @PostMapping("/create")
-    public String create(@RequestParam("subject") String subject, @RequestParam("content") String content) {
-        this.questionService.create(subject, content);
-        return  String.format("redirect:/");
+    public String create(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "question_create";
+        }
+        this.questionService.create(questionForm.getSubject(), questionForm.getContent());
+        return  "redirect:/";
     }
 
 }
