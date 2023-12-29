@@ -25,8 +25,8 @@ class QnaApplicationTests {
     @Test
     void createQ() {
         Question question = new Question();
-        question.setContent("내용1");
-        question.setSubject("제목1");
+        question.setContent("sbb가 무엇인가요?");
+        question.setSubject("sbb에 대해서 알고 싶습니다.");
         question.setCreatedDate(LocalDateTime.now());
         this.questionRepository.save(question);
     }
